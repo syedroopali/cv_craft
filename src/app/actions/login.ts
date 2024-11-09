@@ -21,7 +21,13 @@ export const login = async function (formData: any) {
   const token = await jwt.sign(existUser.id, process.env.SECRET_KEY!);
 
   const cookieSession = await cookies();
-  cookieSession.set("token", token);
+  cookieSession.set({
+    name: "token",
+    value: token,
+    secure: true,
+    httpOnly: true,
+    maxAge: 2419200,
+  });
 
   return { message: "Login Successfully", success: true };
 };
