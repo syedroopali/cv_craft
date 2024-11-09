@@ -21,10 +21,11 @@ export default function Page() {
   const signupData = async function (data: formDataInterface) {
     try {
       setLoading(true);
-      const d: { message: string } = await signup(data);
-      setMessage(d.message);
+      const { message } = await signup(data);
+      setMessage(message);
+      console.log(message);
     } catch (error: any) {
-      throw new Error("Something Went Wrong");
+      throw new Error("Something Went Wrong", error.message);
     } finally {
       setLoading(false);
     }

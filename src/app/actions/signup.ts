@@ -1,5 +1,8 @@
 "use server";
 
+import { User } from "@/models/user";
+import dbConnect from "../lib/dbConnect";
+
 export interface formDataInterface {
   username: string;
   email: string;
@@ -7,9 +10,7 @@ export interface formDataInterface {
   repassword: string;
 }
 
-export default async function signup(
-  formData: formDataInterface
-): Promise<{ message: string }> {
+export default async function signup(formData: formDataInterface) {
   const { username, email, password, repassword } = {
     username: formData.username,
     email: formData.email,
@@ -24,6 +25,23 @@ export default async function signup(
     return { message: "*Password must be atleast 3 digits" };
   if (password !== repassword)
     return { message: "*Repeat Password does not match" };
+
+  await dbConnect();
+  const user = await User.findOne({ email });
+  if (user) {
+    console.log("already");
+    return { message: "User already exist" };
+  }
+
+  const newUser = new User({
+    username: username,
+    email: email,
+    password: password,
+  });
+
+  const savedUser = await newUser.save();
+
+  console.log(savedUser);
 
   return { message: "Signup Successfully" };
 }
