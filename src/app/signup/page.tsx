@@ -4,8 +4,8 @@ import { RiLockPasswordFill } from "react-icons/ri";
 
 export default function Page() {
   return (
-    <div className="w-full bg-gray-100 h-screen flex items-center justify-center">
-      <div className="w-80 bg-white py-8 px-6 shadow-md">
+    <div className="w-full bg-gray-100 h-[90vh] flex items-center justify-center">
+      <div className="w-96 bg-white py-8 px-6 shadow-md">
         <h1 className="text-center text-3xl font-bold tracking-wide mb-6">
           Sign Up
         </h1>
