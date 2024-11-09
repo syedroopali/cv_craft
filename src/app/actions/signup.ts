@@ -2,6 +2,9 @@
 
 import { User } from "@/models/user";
 import dbConnect from "../lib/dbConnect";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export interface formDataInterface {
   username: string;
@@ -20,28 +23,32 @@ export default async function signup(formData: formDataInterface) {
 
   if (username.length < 3) return { message: "*Please Provide Valid Username" };
   if (!email.split("").includes("@") || email.length < 11)
-    return { message: "*Please Provide Valid Email" };
+    return { message: "*Please Provide Valid Email", success: false };
   if (password.length < 3)
-    return { message: "*Password must be atleast 3 digits" };
+    return { message: "*Password must be atleast 3 digits", success: false };
   if (password !== repassword)
-    return { message: "*Repeat Password does not match" };
+    return { message: "*Repeat Password does not match", success: false };
 
   await dbConnect();
   const user = await User.findOne({ email });
   if (user) {
-    console.log("already");
-    return { message: "User already exist" };
+    return { message: "User already exist", success: false };
   }
+
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   const newUser = new User({
     username: username,
     email: email,
-    password: password,
+    password: hashedPassword,
   });
 
   const savedUser = await newUser.save();
 
-  console.log(savedUser);
+  const token = await jwt.sign(savedUser.id, process.env.SECRET_KEY!);
 
-  return { message: "Signup Successfully" };
+  const cookiesData = await cookies();
+  await cookiesData.set("token", token);
+  return { message: "Signup Successfully", success: true };
 }
