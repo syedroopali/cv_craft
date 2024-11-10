@@ -29,7 +29,7 @@ export default function Page() {
       setMessage(message);
       if (success) router.push("/form");
     } catch (error: any) {
-      setMessage("Unable to Login");
+      setMessage("Unable to Signup");
       console.log(error.message);
     } finally {
       setLoading(false);

@@ -31,7 +31,6 @@ export default function Page() {
       setLoading(true);
       const returnData = await login(data);
       setMessage(returnData.message);
-
       if (returnData.success) router.push("/form");
     } catch (error: any) {
       setMessage("unable to Login");
