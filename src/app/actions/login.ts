@@ -6,6 +6,8 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import dbConnect from "../lib/dbConnect";
 export const login = async function (formData: any) {
+  console.log("i am here");
+
   if (!formData.email) return { message: "Please enter email" };
   if (!formData.password) return { message: "Please enter password" };
 
