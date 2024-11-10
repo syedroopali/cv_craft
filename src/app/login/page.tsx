@@ -34,7 +34,7 @@ export default function Page() {
       if (returnData.success) router.push("/form");
     } catch (error: any) {
       setMessage("unable to Login");
-      throw new Error("Unable to login", error.message);
+      throw new Error(`${error}`, error.message);
     } finally {
       setLoading(false);
     }
