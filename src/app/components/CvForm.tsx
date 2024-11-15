@@ -6,6 +6,7 @@ import Contact from "./CvComponents/Contact";
 import Education from "./CvComponents/Education";
 import Experience from "./CvComponents/Experience";
 import Personal from "./CvComponents/Personal";
+import { svFormData } from "../actions/cvFormData";
 
 export default function CvForm({ username }: any) {
   ///  initial State ////////////
@@ -270,7 +271,9 @@ export default function CvForm({ username }: any) {
 
   // Server ////////////////////////////////////////////
 
-  const cvFromData = async function (data: any) {};
+  const cvFromData = async function (data: any) {
+    await svFormData(data);
+  };
 
   // Handlers ////////////////////////////////////////////
   const handleSubmit = function (e: FormEvent) {

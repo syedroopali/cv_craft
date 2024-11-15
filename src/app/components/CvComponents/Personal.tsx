@@ -50,7 +50,7 @@ export default function Personal({ personal, dispatch }: any) {
         <input
           value={cnic}
           onChange={(e) => dispatch({ type: "cnic", payload: e.target.value })}
-          type="number"
+          type="text"
           placeholder="42101-XXXXXXX-1"
           className="border-2 border-purple-950 py-2 px-2 w-full rounded-md"
         />

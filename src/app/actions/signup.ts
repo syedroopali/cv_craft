@@ -42,6 +42,7 @@ export default async function signup(formData: formDataInterface) {
     username: username,
     email: email,
     password: hashedPassword,
+    cvData: {},
   });
 
   const savedUser = await newUser.save();
