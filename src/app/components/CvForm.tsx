@@ -1,251 +1,316 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useReducer } from "react";
 import Button from "./Button";
+import Contact from "./CvComponents/Contact";
+import Education from "./CvComponents/Education";
+import Experience from "./CvComponents/Experience";
+import Personal from "./CvComponents/Personal";
 
 export default function CvForm({ username }: any) {
-  const handleSubmit = function (e: FormEvent) {
-    e.preventDefault();
+  ///  initial State ////////////
+  const initialState = {
+    // Personal /////////////////
+    personal: {
+      name: "",
+      fatherName: "",
+      cnic: "",
+      dob: "",
+      religion: "islam",
+      meritalStatus: "merried",
+      nationality: "Pakistani",
+    },
+
+    // Education /////////////////
+    education: {
+      metric: {
+        institute: "",
+        passingYear: "",
+        certificate: "metric",
+      },
+      inter: {
+        institute: "",
+        passingYear: "",
+        certificate: "Intermediate",
+      },
+      graduation: {
+        institute: "",
+        passingYear: "",
+        certificate: "",
+      },
+      masters: {
+        institute: "",
+        passingYear: "",
+        certificate: "",
+      },
+    },
+    // Contact /////////////////
+    contact: {
+      phone: "",
+      email: "",
+      address: "",
+    },
+    // Experience /////////////////
+    experience: {
+      organization: "",
+      years: "",
+      designation: "",
+    },
   };
 
+  ///  reducer functtion ////////////
+  const reducer = function (state: any, action: any): any {
+    switch (action.type) {
+      // Personal /////////////////
+      case "name":
+        return {
+          ...state,
+          personal: { ...state.personal, name: action.payload },
+        };
+      case "fatherName":
+        return {
+          ...state,
+          personal: { ...state.personal, fatherName: action.payload },
+        };
+      case "cnic":
+        return {
+          ...state,
+          personal: { ...state.personal, cnic: action.payload },
+        };
+      case "dob":
+        return {
+          ...state,
+          personal: { ...state.personal, dob: action.payload },
+        };
+      case "meritalStatus":
+        return {
+          ...state,
+          personal: { ...state.personal, meritalStatus: action.payload },
+        };
+      case "religion":
+        return {
+          ...state,
+          personal: {
+            ...state.personal,
+            religion: action.payload,
+          },
+        };
+      case "nationality":
+        return {
+          ...state,
+          personal: {
+            ...state.personal,
+            nationality: action.payload,
+          },
+        };
+      // Education /////////////////
+      /// Metric ///
+      case "metricInstitute":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            metric: { ...state.education.metric, institute: action.payload },
+          },
+        };
+      case "metricPassingYear":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            metric: { ...state.education.metric, passingYear: action.payload },
+          },
+        };
+      /// Inter ///
+      case "interInstitute":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            inter: { ...state.education.inter, institute: action.payload },
+          },
+        };
+      case "interPassingYear":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            inter: {
+              ...state.education.inter,
+              passingYear: action.payload,
+            },
+          },
+        };
+      /// Graduation ///
+      case "graduationInstitute":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            graduation: {
+              ...state.education.graduation,
+              institute: action.payload,
+            },
+          },
+        };
+      case "graduationPassingYear":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            graduation: {
+              ...state.education.graduation,
+              passingYear: action.payload,
+            },
+          },
+        };
+      case "graduationCertificate":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            graduation: {
+              ...state.education.graduation,
+              certificate: action.payload,
+            },
+          },
+        };
+      /// Masters ///
+      case "mastersInsttitue":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            masters: {
+              ...state.education.masters,
+              institute: action.payload,
+            },
+          },
+        };
+      case "mastersPassingYear":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            masters: {
+              ...state.education.masters,
+              passingYear: action.payload,
+            },
+          },
+        };
+      case "mastersCertificate":
+        return {
+          ...state,
+          education: {
+            ...state.education,
+            masters: {
+              ...state.education.masters,
+              certificate: action.payload,
+            },
+          },
+        };
+      // Contact /////////////////
+      case "contactPhone":
+        return {
+          ...state,
+          contact: {
+            ...state.contact,
+            phone: action.payload,
+          },
+        };
+      case "contactEmail":
+        return {
+          ...state,
+          contact: {
+            ...state.contact,
+            email: action.payload,
+          },
+        };
+      case "contactAddress":
+        return {
+          ...state,
+          contact: {
+            ...state.contact,
+            address: action.payload,
+          },
+        };
+      // Experience /////////////////
+      case "experienceOrganization":
+        return {
+          ...state,
+          experience: {
+            ...state.experience,
+            organization: action.payload,
+          },
+        };
+      case "experienceYears":
+        return {
+          ...state,
+          experience: {
+            ...state.experience,
+            years: action.payload,
+          },
+        };
+      case "experienceDesignation":
+        return {
+          ...state,
+          experience: {
+            ...state.experience,
+            designation: action.payload,
+          },
+        };
+    }
+  };
+
+  ///  useReducer Hook ////////////
+  const [{ personal, education, contact, experience }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
+
+  // Server ////////////////////////////////////////////
+
+  const cvFromData = async function (data: any) {};
+
+  // Handlers ////////////////////////////////////////////
+  const handleSubmit = function (e: FormEvent) {
+    e.preventDefault();
+    const data = {
+      ...personal,
+      ...education,
+      ...contact,
+      ...experience,
+    };
+    cvFromData(data);
+  };
+
+  // JSX ////////////////////////////////////////////
+
   return (
-    <form
-      className="w-full bg-gray-200 flex items-center justify-center flex-col"
-      onSubmit={handleSubmit}
-    >
+    <>
       <div className=" bg-purple-950 w-full flex items-center justify-between px-6">
         <h2 className="py-4 text-white  capitalize">Hy, {username} </h2>
         <Button />
       </div>
-      <hr className="mb-4" />
-      <div className="flex flex-col gap-4 px-4 bg-white w-80 py-4 shadow-sm ">
-        <h2 className="text-purple-950 font-bold">Personal Info</h2>
-        <div>
-          <label htmlFor="name" className="text-purple-950">
-            Full Name
-          </label>
-          <input
-            type="text"
-            placeholder="Ahmed Abdullah"
-            className="border-2 border-purple-950 py-2 px-2 w-full rounded-md capitalize "
-          />
-        </div>
 
-        <div>
-          <label htmlFor="name" className="text-purple-950">
-            Father Name
-          </label>
-          <input
-            type="text"
-            placeholder="Ahmed Abdullah"
-            className="border-2 border-purple-950 py-2 px-2 w-full rounded-md capitalize"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="name" className="text-purple-950">
-            CNIC
-          </label>
-          <input
-            type="number"
-            max={15}
-            placeholder="Ahmed Abdullah"
-            className="border-2 border-purple-950 py-2 px-2 w-full rounded-md"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="date" className="text-purple-950">
-            Date of Birth
-          </label>
-          <input
-            type="date"
-            placeholder="Ahmed Abdullah"
-            className="border-2 border-purple-950 py-2 px-2 w-full rounded-md"
-          />
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <select
-            name="religion"
-            id="religion"
-            title="religion"
-            className="p-1 border-2 border-purple-950 rounded-sm w-[5.6rem]"
+      <form
+        className="w-full bg-gray-200 flex items-center justify-center flex-col py-6"
+        onSubmit={handleSubmit}
+      >
+        {/* Input Form */}
+        <div className="flex flex-col gap-4 px-4 bg-white w-80 py-4 shadow-sm ">
+          <Personal personal={personal} dispatch={dispatch} />
+          <Education education={education} dispatch={dispatch} />
+          <Contact contact={contact} dispatch={dispatch} />
+          <Experience experience={experience} dispatch={dispatch} />
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 rounded-md text-white bg-purple-400"
           >
-            <option> Muslim</option>
-            <option>Non Muslim</option>
-          </select>
-
-          <select
-            name="marital"
-            id="marital"
-            title="marital"
-            className="p-1 border-2 border-purple-950 rounded-sm w-[5.6rem] "
-          >
-            <option> Married</option>
-            <option>Unmarried</option>
-          </select>
-
-          <input
-            name="nationality"
-            id="nationality"
-            placeholder="Nationality"
-            title="nationality"
-            className="p-1 border-2 border-purple-950 rounded-sm w-[5.9rem] px-1 capitalize"
-          ></input>
+            Submit
+          </button>
         </div>
-        <h2 className="text-purple-950 font-bold mt-2">Education</h2>
-        <div className="flex flex-col gap-4">
-          <div>
-            <label htmlFor="name" className="text-purple-950">
-              Matric
-            </label>
-            <input
-              type="text"
-              placeholder="Name of School"
-              className="border-2 border-purple-950 py-2 px-2 w-full rounded-md capitalize "
-            />
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Passing Year
-              </label>
-              <input
-                type="text"
-                placeholder="2014"
-                className="border-2 border-purple-950 py-2 px-2 rounded-md capitalize w-[8rem] "
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Certificate
-              </label>
-              <input
-                type="text"
-                className="border-2 border-purple-950 py-2 px-2 w-[8rem] rounded-md capitalize "
-                placeholder="Metric"
-                value="Metric"
-                disabled
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <div>
-            <label htmlFor="name" className="text-purple-950">
-              Intermediate
-            </label>
-            <input
-              type="text"
-              placeholder="Name of college"
-              className="border-2 border-purple-950 py-2 px-2 w-full rounded-md capitalize "
-            />
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Passing Year
-              </label>
-              <input
-                type="text"
-                placeholder="2016"
-                className="border-2 border-purple-950 py-2 px-2 rounded-md capitalize w-[8rem] "
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Certificate
-              </label>
-              <input
-                type="text"
-                className="border-2 border-purple-950 py-2 px-2 w-[8rem] rounded-md capitalize "
-                placeholder="Intermediate"
-                value="Intermediate"
-                disabled
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-4">
-          <div>
-            <label htmlFor="name" className="text-purple-950">
-              Graduation
-            </label>
-            <input
-              type="text"
-              placeholder="Name of University"
-              className="border-2 border-purple-950 py-2 px-2 w-full rounded-md capitalize "
-            />
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Passing Year
-              </label>
-              <input
-                type="text"
-                placeholder="2018"
-                className="border-2 border-purple-950 py-2 px-2 rounded-md capitalize w-[8rem] "
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Certificate
-              </label>
-              <input
-                type="text"
-                placeholder="B.Com"
-                className="border-2 border-purple-950 py-2 px-2 w-[8rem] rounded-md capitalize "
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <div>
-            <label htmlFor="name" className="text-purple-950">
-              Masters
-            </label>
-            <input
-              type="text"
-              placeholder="Name of University "
-              className="border-2 border-purple-950 py-2 px-2 w-full rounded-md capitalize "
-            />
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Passing Year
-              </label>
-              <input
-                type="text"
-                placeholder="2020"
-                className="border-2 border-purple-950 py-2 px-2 rounded-md capitalize w-[8rem] "
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <label htmlFor="name" className="text-purple-950">
-                Certificate
-              </label>
-              <input
-                type="text"
-                placeholder="MBA"
-                className="border-2 border-purple-950 py-2 px-2 w-[8rem] rounded-md capitalize "
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
+      </form>
+    </>
   );
 }
