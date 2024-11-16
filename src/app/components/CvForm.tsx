@@ -7,8 +7,10 @@ import Education from "./CvComponents/Education";
 import Experience from "./CvComponents/Experience";
 import Personal from "./CvComponents/Personal";
 import { svFormData } from "../actions/cvFormData";
+import { useRouter } from "next/navigation";
 
 export default function CvForm({ username }: any) {
+  const router = useRouter();
   ///  initial State ////////////
   const initialState = {
     // Personal /////////////////
@@ -272,7 +274,10 @@ export default function CvForm({ username }: any) {
   // Server ////////////////////////////////////////////
 
   const cvFromData = async function (data: any) {
-    await svFormData(data);
+    const res = await svFormData(data);
+    if (res.success) {
+      router.push("/cvscreen");
+    }
   };
 
   // Handlers ////////////////////////////////////////////

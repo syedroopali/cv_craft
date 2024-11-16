@@ -21,6 +21,7 @@ export const svFormData = async function (formData: any) {
       },
     }
   );
-
   const user2 = await User.findOne({ _id: id });
+  // console.log(user2);
+  return { success: true };
 };

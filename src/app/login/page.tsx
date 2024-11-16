@@ -97,7 +97,7 @@ export default function Page() {
           </button>
 
           <p className="text-base text-gray-600">
-            dont have an Account? goto{" "}
+            Dont have an Account? goto{" "}
             <Link href="/signup" className="text-blue-600">
               SignUp
             </Link>
